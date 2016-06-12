@@ -28,8 +28,8 @@ class Detail(models.Model):
 #модель машины
 class CarModel(models.Model):
     name = models.CharField('Название', max_length=255)
-    dealer = models.ForeignKey(OfficialDealer)
-    details = models.ManyToManyField(Detail, related_name='maps')
+    dealer = models.ForeignKey(OfficialDealer,verbose_name='Дилер')
+    details = models.ManyToManyField(Detail,verbose_name='Детали')
 
     def __unicode__(self):
         return self.name
@@ -42,7 +42,7 @@ class CarModel(models.Model):
 class Car(models.Model):
     name = models.CharField('Название', max_length=255)
     mileage = models.IntegerField('Пробег')
-    model = models.ForeignKey(CarModel)
+    model = models.ForeignKey(CarModel,verbose_name='Модель машины')
 
     def __unicode__(self):
         return self.name
@@ -55,8 +55,8 @@ class Car(models.Model):
 class CarDetail(models.Model):
     name = models.CharField('Название', max_length=255)
     mileage = models.IntegerField('Пробег')
-    car = models.ForeignKey(Car)
-    nomenclature = models.ForeignKey(Detail)
+    car = models.ForeignKey(Car,verbose_name='Машина')
+    nomenclature = models.ForeignKey(Detail,verbose_name='Номенклатура детали')
 
     def __unicode__(self):
         return self.name
