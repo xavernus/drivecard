@@ -7,6 +7,9 @@ from django.db import models
 class OfficialDealer(models.Model):
     name = models.CharField('Название', max_length=255)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         verbose_name = "Дилер"
         verbose_name_plural = "Дилеры"
@@ -14,6 +17,9 @@ class OfficialDealer(models.Model):
 #детали, устанавливаемые в данную модель машины
 class Detail(models.Model):
     name = models.CharField('Название', max_length=255)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         verbose_name = "Деталь"
@@ -23,7 +29,10 @@ class Detail(models.Model):
 class CarModel(models.Model):
     name = models.CharField('Название', max_length=255)
     dealer = models.ForeignKey(OfficialDealer)
-    details = models.ManyToManyField(Detail)
+    details = models.ManyToManyField(Detail, related_name='maps')
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         verbose_name = "Модель"
@@ -35,6 +44,9 @@ class Car(models.Model):
     mileage = models.IntegerField('Пробег')
     model = models.ForeignKey(CarModel)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         verbose_name = "Машина"
         verbose_name_plural = "Машины"
@@ -44,6 +56,10 @@ class CarDetail(models.Model):
     name = models.CharField('Название', max_length=255)
     mileage = models.IntegerField('Пробег')
     car = models.ForeignKey(Car)
+    nomenclature = models.ForeignKey(Detail)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         verbose_name = "Деталь"
